@@ -18,8 +18,6 @@
 /* offset and period are in microsends. */
 #define OFFSET 1000000
 
-//static void task_body();
-
 class TaskTimer
 {
 public:
@@ -62,6 +60,7 @@ void TaskTimer::AdjustInterval(int new_period) {
 	this->timer_spec.it_interval.tv_sec = new_period / ONE_MILLION;
 	this->timer_spec.it_interval.tv_nsec = (new_period % ONE_MILLION) * ONE_THOUSAND;
 	timer_settime(this->timer, 0, &this->timer_spec, NULL);
+	this->period = new_period;
 }
 
 void TaskTimer::print_interval(void) {
@@ -123,8 +122,8 @@ void TaskTimer::wait_next_activation(void (*callback) (int, Args...), Args... ar
 	/* suspend calling process until a signal is pending */
 	while (1) {
 		sigwait(&this->sigst, &dummy);
-		callback(this->period, args...); //executes the task
 		print_interval();
+		callback(this->period, args...); //executes the task
 	}
 }
 

@@ -22,24 +22,6 @@ void open_sensor_data_file_streams(std::ifstream * input_files) {
     }
 }
 
-// TaskTimer* launch_producers(std::ifstream* file_streams) {
-//     TaskTimer* producer_timers = new TaskTimer[NUM_INPUT_VARS];
-//     producer_timers[FUEL_CONSUMPTION] = *new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, FUEL_CONSUMPTION, &file_streams[FUEL_CONSUMPTION]);
-//     // producer_timers[RPM] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, RPM, &file_streams[RPM]);
-//     // producer_timers[COOLANT_TEMP] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, COOLANT_TEMP, &file_streams[COOLANT_TEMP]);
-//     // producer_timers[GEAR] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, GEAR, &file_streams[GEAR]);
-//     // producer_timers[SPEED] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, SPEED, &file_streams[SPEED]);
-//     return producer_timers;
-// }
-
-// void destruct(TaskTimer* &producer_timers) {
-//     // Destroy timers
-// }
-
-//void launch_consumer() {
-//
-//}
-
 int main() {
     // Open input files
     std::ifstream file_streams[NUM_INPUT_VARS];
@@ -60,7 +42,7 @@ int main() {
     producer_timers[GEAR] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, GEAR, &file_streams[GEAR], data_queue);
     producer_timers[SPEED] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, SPEED, &file_streams[SPEED], data_queue);
 
-    // Time adjustment works!
+    // Time adjustment testing - works!
     // std::this_thread::sleep_for(std::chrono::milliseconds(11000));
     // producer_timers[0]->AdjustInterval(1000000);
 
@@ -68,11 +50,11 @@ int main() {
     std::thread consumer_thread(consumer, data_queue);
 	consumer_thread.detach();
 
-    // Create sporadic task
+    // TODO: Create sporadic task just like the consumer and pass it the producer_timers
 
     while (1) {}
 
-    // destruct(producer_timers);
+    // TODO: destroy heap objects - doesn't really matter since program is exiting anyways
 
     return 0;
 }

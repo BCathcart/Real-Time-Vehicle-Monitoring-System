@@ -4,7 +4,7 @@
 void SensorDataQueue::enqueue(SensorData data) {
     std::unique_lock<std::mutex> lock(mutex);
     data_queue.push(data);
-    cv.notify_one(); // There should only ever be one consumer waiting
+    cv.notify_one(); // There should only ever be the one consumer waiting
 }
 
 SensorData SensorDataQueue::waitForData() {

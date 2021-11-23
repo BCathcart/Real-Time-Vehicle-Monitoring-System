@@ -10,37 +10,37 @@
 void producer(int period, enum InputVariable variable, std::ifstream *istrm, SensorDataQueue* data_queue) {
 	std::cout << "producer()" << std::endl;
 
-    data_queue->enqueue(SensorData{RPM, 12345}); // TODO:remove
+    data_queue->enqueue(SensorData{RPM, 12345}); // TODO: remove after testing
 
-    return; // TODO:remove
+    return; // TODO: remove after testing
 
     double sensor_val;
-   if (!istrm->is_open()) {
-	   throw "ERROR: " + InputDataFiles[variable] + " is not open";
-   } else {
-       // Read the next value and send it to the queue
+    if (!istrm->is_open()) {
+        throw "ERROR: " + InputDataFiles[variable] + " is not open";
+    } else {
+        // Read the next value and send it to the queue
 
-       std::string line;
+        std::string line;
 
-       // Skip period-1 lines
-       for (int i = 0; i < period-1; i++)
-       {
-           std::getline(*istrm, line);
-       }
+        // Skip period-1 lines
+        for (int i = 0; i < period-1; i++)
+        {
+            std::getline(*istrm, line);
+        }
 
-       // Get next data value to send to consumer
-       if (!std::getline(*istrm, line)) {
-           std::cout << "End of " << InputDataFiles[variable] << " reached." << std::endl;
-		   return;
-       } else {
-           std::istringstream iss(line);
-           double sensor_val;
-           if (!(iss >> sensor_val)) {
-               std::cerr << "Could not get data value from " << InputDataFiles[variable] << std::endl;
-           }
-       }
+        // Get next data value to send to consumer
+        if (!std::getline(*istrm, line)) {
+            std::cout << "End of " << InputDataFiles[variable] << " reached." << std::endl;
+            return;
+        } else {
+            std::istringstream iss(line);
+            double sensor_val;
+            if (!(iss >> sensor_val)) {
+                std::cerr << "Could not get data value from " << InputDataFiles[variable] << std::endl;
+            }
+        }
 
-       // Send it to the consumer
-		data_queue->enqueue(SensorData{variable, sensor_val});
-   }
+        // Send it to the consumer
+            data_queue->enqueue(SensorData{variable, sensor_val});
+    }
 }

@@ -18,11 +18,6 @@ enum InputVariable
     SPEED
 };
 
-//extern int periods[] = {};
-
 extern std::string InputDataFiles[];
-// extern std::ifstream inputDataFileStreams[NUM_INPUT_VARS];
-
-// Put the data queue (my custom database class) here
 
 #endif //SHARED_DATA_H
