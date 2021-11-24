@@ -6,6 +6,9 @@
 
 void print_data(SensorData data) {
     // TODO: output data to the terminal
+                // RPM GEAR ...
+    // t = T:   3
+    // t = T:         2
 
     // TODO: remove the following test code
     std::string msg = std::to_string(data.var) + ": " + std::to_string(data.data);

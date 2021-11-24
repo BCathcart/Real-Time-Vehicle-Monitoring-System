@@ -6,6 +6,7 @@
 #include "timer.h"
 #include "producer.h"
 #include "consumer.h"
+#include "frequency_adjuster.h"
 #include "sensor_data_queue.h"
 
 #define DEFAULT_TASK_PERIOD_US 5000000
@@ -35,7 +36,8 @@ int main() {
     SensorDataQueue* data_queue = new SensorDataQueue();
 
     // Create producers
-    TaskTimer* producer_timers[FUEL_CONSUMPTION];
+    // TaskTimer* producer_timers[FUEL_CONSUMPTION];
+    TaskTimer** producer_timers = new TaskTimer*[NUM_INPUT_VARS];
     producer_timers[FUEL_CONSUMPTION] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, FUEL_CONSUMPTION, &file_streams[FUEL_CONSUMPTION], data_queue);
     producer_timers[RPM] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, RPM, &file_streams[RPM], data_queue);
     producer_timers[COOLANT_TEMP] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, COOLANT_TEMP, &file_streams[COOLANT_TEMP], data_queue);
@@ -50,7 +52,9 @@ int main() {
     std::thread consumer_thread(consumer, data_queue);
 	consumer_thread.detach();
 
-    // TODO: Create sporadic task just like the consumer and pass it the producer_timers
+    // Create sporadic task
+    std::thread frequency_adjuster_thread(listen_for_user_commands, producer_timers);
+	frequency_adjuster_thread.detach();
 
     while (1) {}
 
@@ -58,3 +62,31 @@ int main() {
 
     return 0;
 }
+
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <unistd.h>
+// #include <limits.h>
+
+// #include <fstream>
+// #include <iostream>
+
+
+// int main( void )
+// {
+//     char* cwd;
+//     char buff[PATH_MAX + 1];
+
+//     cwd = getcwd( buff, PATH_MAX + 1 );
+//     if( cwd != NULL ) {
+//         printf( "My working directory is %s.\n", cwd );
+//     }
+
+//     std::ifstream istrm;
+//     istrm.open("test.txt");
+//     std::cout << istrm.is_open();
+
+
+//     return EXIT_SUCCESS;
+// }
+

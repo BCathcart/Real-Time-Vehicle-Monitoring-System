@@ -14,7 +14,6 @@ typedef struct SensorData {
 } SensorData;
 
 class SensorDataQueue {
-
     public:
         void enqueue(SensorData data);
         int size();
