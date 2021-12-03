@@ -51,7 +51,8 @@ TaskTimer::TaskTimer(int period, void (*callback) (int, Args... args), Args... a
 	std::thread thread_obj(&TaskTimer::wait_next_activation<Args...>, this, callback, args...);
 	thread_obj.detach();
 
-	std::cout << "Thread started" << std::endl;
+	std::cout << "Timer thread started" << std::endl;
+	std::cout << &this->sigst << std::endl;
 
 	this->cycles = 0;
 }

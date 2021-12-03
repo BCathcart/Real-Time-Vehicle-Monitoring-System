@@ -8,7 +8,7 @@
 
 // Timer will call this function and pass in the data_type so it knows what file to read from
 void producer(int period, enum InputVariable variable, std::ifstream *istrm, SensorDataQueue* data_queue) {
-	std::cout << "producer()" << std::endl;
+	// std::cout << "producer()" << std::endl;
 
     data_queue->enqueue(SensorData{RPM, 12345}); // TODO: remove after testing
 

@@ -39,10 +39,10 @@ int main() {
     // TaskTimer* producer_timers[FUEL_CONSUMPTION];
     TaskTimer** producer_timers = new TaskTimer*[NUM_INPUT_VARS];
     producer_timers[FUEL_CONSUMPTION] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, FUEL_CONSUMPTION, &file_streams[FUEL_CONSUMPTION], data_queue);
-    producer_timers[RPM] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, RPM, &file_streams[RPM], data_queue);
-    producer_timers[COOLANT_TEMP] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, COOLANT_TEMP, &file_streams[COOLANT_TEMP], data_queue);
-    producer_timers[GEAR] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, GEAR, &file_streams[GEAR], data_queue);
-    producer_timers[SPEED] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, SPEED, &file_streams[SPEED], data_queue);
+    // producer_timers[RPM] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, RPM, &file_streams[RPM], data_queue);
+    // producer_timers[COOLANT_TEMP] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, COOLANT_TEMP, &file_streams[COOLANT_TEMP], data_queue);
+    // producer_timers[GEAR] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, GEAR, &file_streams[GEAR], data_queue);
+    // producer_timers[SPEED] = new TaskTimer(DEFAULT_TASK_PERIOD_US, producer, SPEED, &file_streams[SPEED], data_queue);
 
     // Time adjustment testing - works!
     // std::this_thread::sleep_for(std::chrono::milliseconds(11000));

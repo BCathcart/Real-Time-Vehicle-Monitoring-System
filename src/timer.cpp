@@ -1,5 +1,7 @@
 #include "timer.h"
 
+std::mutex print_lock;
+
 void TaskTimer::AdjustInterval(int new_period) {
 	this->timer_spec.it_interval.tv_sec = new_period / ONE_MILLION;
 	this->timer_spec.it_interval.tv_nsec = (new_period % ONE_MILLION) * ONE_THOUSAND;
@@ -20,7 +22,9 @@ void TaskTimer::print_interval(void) {
 		current = tv.tv_sec * ONE_THOUSAND + tv.tv_nsec / ONE_MILLION;
 
 		if (this->cycles > 0) {
-			std::cout << "Time elapsed: " + std::to_string(current - this->prev_time) + "\n";
+			print_lock.lock();
+			std::cout << std::this_thread::get_id() << " - Time elapsed: " + std::to_string(current - this->prev_time) + "\n";
+			print_lock.unlock();
 		}
 		this->prev_time = current;
 	}

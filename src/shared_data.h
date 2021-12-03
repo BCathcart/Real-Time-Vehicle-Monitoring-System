@@ -7,7 +7,7 @@
 
 #define NUM_INPUT_VARS 5
 
-#define INPUT_DATA_PATH "data/"
+#define INPUT_DATA_PATH "/data/home/project_data/"
 
 enum InputVariable
 {
