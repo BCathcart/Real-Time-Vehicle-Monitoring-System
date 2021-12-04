@@ -11,8 +11,8 @@ void print_data(SensorData data) {
     // t = T:         2
 
     // TODO: remove the following test code
-    // std::string msg = std::to_string(data.var) + ": " + std::to_string(data.data);
-    // std::cout << msg << std::endl;
+    std::string msg = std::to_string(data.var) + ": " + std::to_string(data.data);
+    std::cout << msg << std::endl;
 }
 
 void consumer(SensorDataQueue * data_queue) {
