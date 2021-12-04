@@ -15,8 +15,16 @@ typedef struct SensorData {
 
 class SensorDataQueue {
     public:
+        /*
+        * Adds the data to the queue and notifies any threads waiting for data.
+        * @param data The new data to add to the queue.
+        */
         void enqueue(SensorData data);
-        int size();
+
+        /*
+        * Waits for sensor data to be in the queue and then returns it.
+        * @return The next sensor data.
+        */
         SensorData waitForData();
 
     private:

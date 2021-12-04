@@ -51,7 +51,9 @@ int main() {
     std::thread frequency_adjuster_thread(listen_for_user_commands, periodic_task_store);
 	frequency_adjuster_thread.detach();
 
-    run_periodic_tasks(periodic_task_store);
+    if (run_periodic_tasks(periodic_task_store) == -1) {
+        std::cerr << "Could not run periodic tasts" << std::endl;
+    }
 
     // TODO: destroy heap objects - doesn't really matter since program is exiting anyways
 

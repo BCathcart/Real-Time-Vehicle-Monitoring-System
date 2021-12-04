@@ -10,12 +10,39 @@
 
 class Producer {
     public:
-        Producer(PeriodicTaskStore* task_store, enum InputVariable type, std::ifstream *istrm, SensorDataQueue* data_queue);
+        /*
+        * Constructs a producer and launches a thread that runs the task.
+        * @param task_store The periodic task store.
+        * @param variable The sensor input variable type of the data being produced.
+        * @param istrm Pointer to the sensor data file input stream.
+        * @param data_queue The SensorDataQueue for sending sensor data to the consumer.
+        */
+        Producer(PeriodicTaskStore* task_store, enum InputVariable variable, std::ifstream *istrm, SensorDataQueue* data_queue);
+
+        /*
+        * Notifies the producer task that it is ready to run.
+        */
         void notify();
 
     private:
-        void run_task(enum InputVariable type, std::ifstream *istrm, SensorDataQueue* data_queue);
+        /*
+        * Infinitely loops, running the producer task when it has been notified
+        * (this->notify() is called) that the next sensor data value can be fetched.
+        * @param variable The sensor input variable type of the data being produced.
+        * @param istrm Pointer to the sensor data file input stream.
+        * @param data_queue The SensorDataQueue for sending sensor data to the consumer.
+        */
+        void run_task(enum InputVariable variable, std::ifstream *istrm, SensorDataQueue* data_queue);
+
+        /*
+        * Waits until a period has elapsed and the next sensor data can be read.
+        * @return The elapsed ticks since the task last ran.
+        */
         uint32_t wait();
+
+        /*
+        * Prints time interval between task runs for debugging purposes.
+        */
         void print_interval();
 
         uint32_t id;
