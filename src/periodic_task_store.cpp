@@ -10,6 +10,7 @@ void PeriodicTaskStore::addTask(uint32_t id, Producer* producer, uint32_t period
 int PeriodicTaskStore::getPeriodicTaskTimeData(uint32_t id, PeriodicTaskData* data) {
     std::unique_lock<std::mutex> lock(mutex);
     if (task_map.count(id) == 0) {
+        std::cerr << "Error: Task with ID=" + std::to_string(id) + " does not exist\n";
         return -1;
     }
     *data = task_map[id]->data;
@@ -18,6 +19,10 @@ int PeriodicTaskStore::getPeriodicTaskTimeData(uint32_t id, PeriodicTaskData* da
 
 void PeriodicTaskStore::updatePeriod(uint32_t id, uint32_t period) {
     std::unique_lock<std::mutex> lock(mutex);
+    if (task_map.count(id) == 0) {
+        std::cerr << "Error: Task with ID=" + std::to_string(id) + " does not exist\n";
+        return;
+    }
     PeriodicTask* task = task_map[id];
     task->data.period = period;
 }
@@ -35,5 +40,9 @@ void PeriodicTaskStore::incrementElapsedTime() {
 
 void PeriodicTaskStore::resetElapsedTicks(uint32_t id) {
     std::unique_lock<std::mutex> lock(mutex);
+    if (task_map.count(id) == 0) {
+        std::cerr << "Error: Task with ID=" + std::to_string(id) + " does not exist\n";
+        return;
+    }
     task_map[id]->data.elapsed_ticks = 0;
 }
