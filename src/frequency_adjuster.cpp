@@ -20,11 +20,19 @@ void listen_for_user_commands(PeriodicTaskStore* periodic_task_store) {
             }
             newPeriod.push_back(std::stoi(taskChange));
 
+            if (newPeriod[1] < 1) {
+                std::cout << newPeriod[1] << std::endl;
+                std::cerr << "Error: The new period must >= 1." << std::endl;
+                newPeriod.clear();
+                continue;
+            }
+
             std::cout << "Task: " << newPeriod[0] << " New Period: " << newPeriod[1] << std::endl;
             periodic_task_store->updatePeriod(newPeriod[0], newPeriod[1]);
             newPeriod.clear();
         } catch (...) {
-            std::cerr << "Error: Input must be in the form '<int>,<int>' which represents 'task#','newPeriod'" << std::endl;
+            std::cerr << "Error: Input must be in the form '<uint>,<uint>' which represents 'variable #','newPeriod'" << std::endl;
+            newPeriod.clear();
         }
 	}
 }
