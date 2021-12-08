@@ -59,10 +59,7 @@ uint32_t Producer::wait() {
 void Producer::run_task(enum InputVariable variable, std::ifstream *istrm, SensorDataQueue* data_queue) {
     while (true) {
         uint32_t elapsed_ticks = this->wait();
-        // print_interval();
         this->task_store->resetElapsedTicks(this->id);
-        // data_queue->enqueue(SensorData{RPM, 12345}); // TODO: remove after testing
-        // return; // TODO: remove after testing
 
         double sensor_val;
         if (!istrm->is_open()) {
